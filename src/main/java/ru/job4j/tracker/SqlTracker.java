@@ -12,6 +12,13 @@ import java.util.Properties;
 public class SqlTracker implements Store {
     private Connection connection;
 
+    SqlTracker(Connection connection) {
+        this.connection = connection;
+    }
+
+    SqlTracker() {
+    }
+
     @Override
     public Item add(Item item) {
         try (PreparedStatement statement =
