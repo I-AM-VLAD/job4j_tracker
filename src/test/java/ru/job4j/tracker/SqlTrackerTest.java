@@ -7,16 +7,14 @@ import org.junit.Test;
 import ru.job4j.tracker.model.Item;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class SqlTrackerTest {
 
@@ -69,38 +67,32 @@ public class SqlTrackerTest {
     @Test
     public void testFindByName() {
         SqlTracker tracker = new SqlTracker(connection);
-        List<Item> expected = new ArrayList<>();
         Item item1 = new Item("item1");
         Item item2 = new Item("item2");
         Item item3 = new Item("item3");
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        expected.add(item1);
-        assertThat(tracker.findByName("item1"), is(expected));
+        assertThat(tracker.findByName("item1"), is(List.of(item1)));
     }
 
     @Test
     public void testFindAll() {
         SqlTracker tracker = new SqlTracker(connection);
-        List<Item> expected = new ArrayList<>();
         Item item1 = new Item("item1");
         Item item2 = new Item("item2");
         Item item3 = new Item("item3");
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        expected.add(item1);
-        expected.add(item2);
-        expected.add(item3);
-        assertThat(tracker.findAll(), is(expected));
+        assertThat(tracker.findAll(), is(List.of(item1, item2, item3)));
     }
     @Test
     public void testDelete() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         tracker.add(item);
-        assertThat(tracker.delete(item.getId()), is(true));
+        assertTrue(tracker.delete(item.getId()));
     }
     @Test
     public void testReplace() {
@@ -109,7 +101,17 @@ public class SqlTrackerTest {
         Item newItem = new Item("newItem");
         tracker.add(item);
         assertThat(tracker.replace(item.getId(), newItem), is(true));
-    }
 
+        try (PreparedStatement statement =
+                     connection.prepareStatement("select name from items where id = ?")) {
+            statement.setInt(1, item.getId());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                assertThat(resultSet.getString("name"), is("newItem"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+
 
