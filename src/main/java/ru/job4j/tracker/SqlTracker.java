@@ -73,9 +73,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement statement = connection.prepareStatement("select * from items")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    Timestamp timestamp =  resultSet.getTimestamp("created");
-                    LocalDateTime created = timestamp.toLocalDateTime();
-                    items.add(objectItem(resultSet, created));
+                    items.add(objectItem(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -91,9 +89,7 @@ public class SqlTracker implements Store {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                        Timestamp timestamp = resultSet.getTimestamp("created");
-                        LocalDateTime created = timestamp.toLocalDateTime();
-                        result.add(objectItem(resultSet, created));
+                        result.add(objectItem(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -108,9 +104,9 @@ public class SqlTracker implements Store {
         try (PreparedStatement statement = connection.prepareStatement("select * from items where id = ?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                        Timestamp timestamp = resultSet.getTimestamp("created");
-                        LocalDateTime created = timestamp.toLocalDateTime();
-                        result = objectItem(resultSet, created);
+                if (resultSet.next()) {
+                    result = objectItem(resultSet);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,11 +136,11 @@ public class SqlTracker implements Store {
         }
     }
 
-    public Item objectItem(ResultSet resultSet, LocalDateTime created) throws SQLException {
+    public Item objectItem(ResultSet resultSet) throws SQLException {
         return new Item(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
-                created
+                resultSet.getTimestamp("created").toLocalDateTime()
         );
     }
 }
