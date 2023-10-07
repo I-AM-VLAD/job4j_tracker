@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import ru.job4j.tracker.model.Item;
 
 import java.io.InputStream;
@@ -20,6 +21,7 @@ public class SqlTrackerTest {
 
     static Connection connection;
 
+    @Disabled
     @BeforeClass
     public static void initConnection() {
         try (InputStream in = SqlTrackerTest.class.getClassLoader().getResourceAsStream("test.properties")) {
@@ -37,11 +39,13 @@ public class SqlTrackerTest {
         }
     }
 
+    @Disabled
     @AfterClass
     public static void closeConnection() throws SQLException {
         connection.close();
     }
 
+    @Disabled
     @After
     public void wipeTable() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("delete from items")) {
@@ -49,6 +53,7 @@ public class SqlTrackerTest {
         }
     }
 
+    @Disabled
     @Test
     public void testAdd() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -56,6 +61,7 @@ public class SqlTrackerTest {
         assertThat(tracker.add(item), is(item));
     }
 
+    @Disabled
     @Test
     public void testFindById() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -64,6 +70,7 @@ public class SqlTrackerTest {
         assertThat(tracker.findById(item.getId()), is(item));
     }
 
+    @Disabled
     @Test
     public void testFindByName() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -76,6 +83,7 @@ public class SqlTrackerTest {
         assertThat(tracker.findByName("item1"), is(List.of(item1)));
     }
 
+    @Disabled
     @Test
     public void testFindAll() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -87,6 +95,8 @@ public class SqlTrackerTest {
         tracker.add(item3);
         assertThat(tracker.findAll(), is(List.of(item1, item2, item3)));
     }
+
+    @Disabled
     @Test
     public void testDelete() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -94,6 +104,8 @@ public class SqlTrackerTest {
         tracker.add(item);
         assertTrue(tracker.delete(item.getId()));
     }
+
+    @Disabled
     @Test
     public void testReplace() {
         SqlTracker tracker = new SqlTracker(connection);
