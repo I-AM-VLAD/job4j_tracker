@@ -1,16 +1,57 @@
-2022-01-02 19:30:39 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "DATABASECHANGELOGLOCK" не найдена
-Table "DATABASECHANGELOGLOCK" not found; SQL statement:
-SELECT COUNT(*) FROM DATABASECHANGELOGLOCK [42102-200]
-2022-01-21 02:23:03 jdbc[3]: exception
+2023-10-09 21:10:13.896668+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+insert into items (name, created) values (?, ?) [42104-222]
+2023-10-09 21:10:14.006038+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+select * from items where id = ? [42104-222]
+2023-10-09 21:10:15.321995+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+delete from items [42104-222]
+2023-10-09 21:15:24.150471+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+insert into items (name, created) values (?, ?) [42104-222]
+2023-10-09 21:15:24.228591+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+select * from items where id = ? [42104-222]
+2023-10-09 21:15:26.047023+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+delete from items [42104-222]
+2023-10-14 15:58:37.150907+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+insert into items (name, created) values (?, ?) [42104-222]
+2023-10-14 15:58:37.229029+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+select * from items where id = ? [42104-222]
+2023-10-14 15:58:39.164332+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+delete from items [42104-222]
+2023-10-14 16:05:29.778689+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+insert into items (name, created) values (?, ?) [42104-222]
+2023-10-14 16:05:30.012676+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+select * from items where id = ? [42104-222]
+2023-10-14 16:05:32.877485+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+delete from items [42104-222]
+2023-10-14 16:06:25.580148+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+insert into items (name, created) values (?, ?) [42104-222]
+2023-10-14 16:06:25.862127+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+select * from items where id = ? [42104-222]
+2023-10-14 16:06:27.005052+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEMS" not found (this database is empty); SQL statement:
+delete from items [42104-222]
+2023-10-14 16:23:16.619163+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DATABASECHANGELOGLOCK" not found (this database is empty); SQL statement:
+SELECT COUNT(*) FROM DATABASECHANGELOGLOCK [42104-222]
+2023-10-14 18:28:48.256625+03:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
-No data is available [2000-200]
-2022-01-21 02:25:02 jdbc[3]: exception
+No data is available [2000-222]
+2023-10-14 18:30:21.887222+03:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
-No data is available [2000-200]
-2022-01-22 04:49:00 jdbc[3]: exception
+No data is available [2000-222]
+2023-10-14 18:34:30.180722+03:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
-No data is available [2000-200]
-2022-01-23 20:48:10 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: Нет данных
-No data is available [2000-200]
+No data is available [2000-222]

@@ -1,10 +1,9 @@
 package ru.job4j.tracker;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import ru.job4j.tracker.model.Item;
 
 import java.io.InputStream;
@@ -13,18 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class SqlTrackerTest {
 
-    static Connection connection;
+    private static Connection connection;
 
-    @Disabled
-    @BeforeClass
+    @BeforeAll
     public static void initConnection() {
-        try (InputStream in = SqlTrackerTest.class.getClassLoader().getResourceAsStream("test.properties")) {
+        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("db/liquibase_test.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
@@ -39,29 +38,18 @@ public class SqlTrackerTest {
         }
     }
 
-    @Disabled
-    @AfterClass
+    @AfterAll
     public static void closeConnection() throws SQLException {
         connection.close();
     }
 
-    @Disabled
-    @After
+    @AfterEach
     public void wipeTable() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("delete from items")) {
             statement.execute();
         }
     }
 
-    @Disabled
-    @Test
-    public void testAdd() {
-        SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        assertThat(tracker.add(item), is(item));
-    }
-
-    @Disabled
     @Test
     public void testFindById() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -70,7 +58,13 @@ public class SqlTrackerTest {
         assertThat(tracker.findById(item.getId()), is(item));
     }
 
-    @Disabled
+    @Test
+    public void testAdd() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("item");
+        assertThat(tracker.add(item), is(item));
+    }
+
     @Test
     public void testFindByName() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -83,7 +77,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findByName("item1"), is(List.of(item1)));
     }
 
-    @Disabled
     @Test
     public void testFindAll() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -96,7 +89,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findAll(), is(List.of(item1, item2, item3)));
     }
 
-    @Disabled
     @Test
     public void testDelete() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -105,7 +97,6 @@ public class SqlTrackerTest {
         assertTrue(tracker.delete(item.getId()));
     }
 
-    @Disabled
     @Test
     public void testReplace() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -113,7 +104,6 @@ public class SqlTrackerTest {
         Item newItem = new Item("newItem");
         tracker.add(item);
         assertThat(tracker.replace(item.getId(), newItem), is(true));
-
         try (PreparedStatement statement =
                      connection.prepareStatement("select name from items where id = ?")) {
             statement.setInt(1, item.getId());
@@ -125,5 +115,3 @@ public class SqlTrackerTest {
         }
     }
 }
-
-
