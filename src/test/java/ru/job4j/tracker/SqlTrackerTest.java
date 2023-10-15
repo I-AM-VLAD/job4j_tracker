@@ -103,15 +103,7 @@ public class SqlTrackerTest {
         Item item = new Item("item");
         Item newItem = new Item("newItem");
         tracker.add(item);
-        assertThat(tracker.replace(item.getId(), newItem), is(true));
-        try (PreparedStatement statement =
-                     connection.prepareStatement("select name from items where id = ?")) {
-            statement.setInt(1, item.getId());
-            try (ResultSet resultSet = statement.executeQuery()) {
-                assertThat(resultSet.getString("name"), is("newItem"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        tracker.replace(item.getId(), newItem);
+        assertThat(tracker.findById(item.getId()).getName(), is("newItem"));
     }
 }
