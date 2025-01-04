@@ -173,5 +173,4 @@ public class HbmTracker implements Store {
     public void close() {
         StandardServiceRegistryBuilder.destroy(registry);
     }
-
 }
